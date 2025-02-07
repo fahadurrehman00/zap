@@ -5,7 +5,7 @@ import Dashboard from "../pages/Dashboard";
 
 const DashboardLayout = () => {
   return (
-    <div className='flex h-screen p-4 bg-[#F8FFF3]'>
+    <div className='flex p-4 bg-background'>
       <Sidebar />
       <div className='flex flex-col flex-grow'>
         <Navbar />
