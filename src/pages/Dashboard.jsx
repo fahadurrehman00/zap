@@ -18,7 +18,7 @@ const Dashboard = () => {
       {/* Left Section (6/10) */}
       <div className='col-span-6'>
         <div className='flex items-center justify-between mb-4'>
-          <h2 className='text-xl font-bold'>Accounts</h2>
+          <h2 className='text-xl font-bold'>Account</h2>
           <div className='flex space-x-2'>
             <MdOutlineKeyboardArrowLeft className='cursor-pointer text-xl rounded-full p-1 bg-primary hover:bg-secondary hover:text-white transition-all Duration-500' />
             <MdOutlineKeyboardArrowRight className='cursor-pointer text-xl rounded-full p-1 bg-primary hover:bg-secondary hover:text-white transition-all Duration-500' />
