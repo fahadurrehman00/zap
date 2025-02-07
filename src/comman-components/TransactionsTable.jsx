@@ -234,14 +234,13 @@ const TransactionsTable = () => {
     const DOTS = "...";
 
     if (totalPages <= 5) {
-      // Show all page numbers if there are 5 or fewer pages
       for (let i = 1; i <= totalPages; i++) {
         buttons.push(
           <button
             key={i}
             onClick={() => setCurrentPage(i)}
-            className={`px-3 py-1 rounded-lg ${
-              currentPage === i ? "bg-green-600 text-white" : "bg-gray-100"
+            className={`px-3 py-1 rounded-lg border border-green-700 ${
+              currentPage === i ? "bg-secondary text-white" : ""
             }`}
           >
             {i}
@@ -256,7 +255,7 @@ const TransactionsTable = () => {
             key={1}
             onClick={() => setCurrentPage(1)}
             className={`px-3 py-1 rounded-lg border border-green-700 ${
-              currentPage === 1 ? "bg-green-600 text-white" : ""
+              currentPage === 1 ? "bg-secondary text-white" : ""
             }`}
           >
             1
@@ -265,7 +264,10 @@ const TransactionsTable = () => {
 
         if (currentPage > 4) {
           buttons.push(
-            <button key='dots-left' className='px-3 py-1 cursor-default'>
+            <button
+              key='dots-left'
+              className='px-3 py-1 cursor-default rounded-lg border border-green-700'
+            >
               {DOTS}
             </button>
           );
@@ -281,8 +283,8 @@ const TransactionsTable = () => {
           <button
             key={i}
             onClick={() => setCurrentPage(i)}
-            className={`px-3 py-1 rounded-lg border border-green-700 ${
-              currentPage === i ? "bg-green-600 text-white" : ""
+            className={`px-3 py-1 rounded-lg border border-secondary ${
+              currentPage === i ? "bg-secondary text-white" : ""
             }`}
           >
             {i}
@@ -294,7 +296,7 @@ const TransactionsTable = () => {
         buttons.push(
           <button
             key='dots-right'
-            className='px-3 py-1 cursor-default rounded-lg border border-green-700'
+            className='px-3 py-1 cursor-default rounded-lg border border-secondary'
           >
             {DOTS}
           </button>
@@ -307,8 +309,8 @@ const TransactionsTable = () => {
           <button
             key={totalPages}
             onClick={() => setCurrentPage(totalPages)}
-            className={`px-3 py-1 rounded-lg border border-green-700 ${
-              currentPage === totalPages ? "bg-green-600 text-white" : ""
+            className={`px-3 py-1 rounded-lg border border-secondary ${
+              currentPage === totalPages ? "bg-secondary text-white" : ""
             }`}
           >
             {totalPages}
@@ -328,7 +330,7 @@ const TransactionsTable = () => {
 
   const renderStatusBadge = (status) => {
     const statusColors = {
-      Success: "bg-green-100 text-green-700 border-green-700",
+      Success: "bg-green-100 text-secondary border-secondary",
       Pending: "bg-yellow-100 text-yellow-700 border-yellow-700",
       Canceled: "bg-red-100 text-red-700 border-red-700",
     };
@@ -342,11 +344,11 @@ const TransactionsTable = () => {
   };
 
   return (
-    <div>
+    <div className='text-secondary'>
       <div className='flex justify-between items-center mb-4'>
         <h2 className='text-lg font-bold'>Recent Transactions</h2>
-        <div className='flex items-center border border-green-700 rounded-lg px-3 py-2 w-64 bg-transparent'>
-          <CiSearch className='text-gray-500 mr-2' />
+        <div className='flex items-center border border-secondary rounded-lg px-3 py-2 w-64 bg-transparent'>
+          <CiSearch className='mr-2' />
           <input
             type='text'
             placeholder='Search transactions'
@@ -355,7 +357,7 @@ const TransactionsTable = () => {
         </div>
       </div>
 
-      <table className='w-full text-left text-sm'>
+      <table className='w-full text-left text-sm text-secondary'>
         <thead>
           <tr className='border-b border-t'>
             <th className='w-1/5 py-4'>Name</th>
@@ -395,7 +397,7 @@ const TransactionsTable = () => {
         <button
           onClick={handlePreviousPage}
           disabled={currentPage === 1}
-          className='p-2 rounded-md border border-green-700 hover:bg-gray-300'
+          className='p-2 rounded-md border border-secondary hover:bg-gray-300'
         >
           <MdOutlineKeyboardArrowLeft />
         </button>
@@ -403,7 +405,7 @@ const TransactionsTable = () => {
         <button
           onClick={handleNextPage}
           disabled={currentPage === totalPages}
-          className='p-2 rounded-md border border-green-700 hover:bg-gray-300'
+          className='p-2 rounded-md border border-secondary hover:bg-gray-300'
         >
           <MdOutlineKeyboardArrowRight />
         </button>

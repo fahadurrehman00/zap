@@ -20,7 +20,7 @@ const Navbar = () => {
       <div className='flex items-center space-x-4'>
         {/* Search Bar */}
         <div
-          className={`flex items-center bg-[#B7FA8A] rounded-full ${
+          className={`flex items-center bg-primary rounded-full ${
             isSearchOpen ? "w-64 p-2" : "w-10 p-2"
           } transition-all duration-300 ease-in-out cursor-pointer`}
           onClick={toggleSearch}
@@ -37,7 +37,7 @@ const Navbar = () => {
         </div>
 
         {/* Notification Icon */}
-        <div className='bg-[#B7FA8A] rounded-full p-2 cursor-pointer'>
+        <div className='bg-primary rounded-full p-2 cursor-pointer'>
           <img src={BellIcon} alt='Bell' />
         </div>
 
