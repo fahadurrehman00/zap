@@ -14,7 +14,7 @@ const TransactionTable2 = () => {
       "https://images.unsplash.com/photo-1494790108377-be9c29b29330?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmlsZSUyMHBpY3R1cmV8ZW58MHx8MHx8fDA%3D",
     amount: i % 2 === 0 ? 302000 : -302000,
     method: i % 3 === 0 ? "Transfer" : "Card",
-    cardNumber: i % 3 === 0 ? "*9081" : "*9090",
+    cardNumber: i % 3 === 0 ? "****9081" : "****9090",
     date: "16 Jan 2024",
     time: "10:00 AM",
     status: i % 2 === 0 ? "Success" : i % 3 === 0 ? "Pending" : "Canceled",
@@ -34,11 +34,30 @@ const TransactionTable2 = () => {
     };
     return (
       <span
-        className={`px-3 py-1 rounded-md text-sm font-bold border ${statusColors[status]}`}
+        className={`px-3 py-1 rounded text-sm font-semibold border ${statusColors[status]}`}
       >
         {status}
       </span>
     );
+  };
+
+  const renderPagination = () => {
+    const pageNumbers = [];
+    if (totalPages <= 5) {
+      for (let i = 1; i <= totalPages; i++) {
+        pageNumbers.push(i);
+      }
+    } else {
+      pageNumbers.push(1, 2, 3, 4);
+      if (currentPage >= 3 && currentPage < totalPages - 2) {
+        pageNumbers.push("...");
+        pageNumbers.push(currentPage);
+      } else if (currentPage >= totalPages - 2) {
+        pageNumbers.push("...");
+      }
+      pageNumbers.push(totalPages);
+    }
+    return pageNumbers;
   };
 
   return (
@@ -59,7 +78,7 @@ const TransactionTable2 = () => {
           </button>
         </div>
         <div className='flex space-x-2 items-center'>
-          <button className='bg-green-200 p-2 rounded-lg'>
+          <button className='bg-primary p-2 rounded-lg'>
             <BsEye />
           </button>
           <span>Show</span>
@@ -100,9 +119,9 @@ const TransactionTable2 = () => {
                 <span className='font-medium'>{transaction.name}</span>
               </td>
               <td
-                className={
+                className={`font-medium ${
                   transaction.amount > 0 ? "text-green-600" : "text-red-600"
-                }
+                }`}
               >
                 {transaction.amount.toLocaleString("en-US", {
                   style: "currency",
@@ -110,18 +129,18 @@ const TransactionTable2 = () => {
                 })}
               </td>
               <td>
-                {transaction.method} <br />
-                {transaction.cardNumber}
+                {transaction.method} <br /> {transaction.cardNumber}
               </td>
               <td>
-                {transaction.date} <br />
-                {transaction.time}
+                {transaction.date} <br /> {transaction.time}
               </td>
               <td>{renderStatusBadge(transaction.status)}</td>
-              <td className='flex space-x-2'>
-                <FiEye className='cursor-pointer text-gray-600' />
-                <FiPrinter className='cursor-pointer text-gray-600' />
-                <FiTrash2 className='cursor-pointer text-red-600' />
+              <td>
+                <div className='flex space-x-2'>
+                  <FiEye className='cursor-pointer text-secondary text-base' />
+                  <FiPrinter className='cursor-pointer text-secondary text-base' />
+                  <FiTrash2 className='cursor-pointer text-secondary text-base' />
+                </div>
               </td>
             </tr>
           ))}
@@ -137,17 +156,23 @@ const TransactionTable2 = () => {
         </span>
         <div className='flex space-x-2'>
           <button
+            className='px-2 py-1 rounded-md border border-secondary hover:bg-gray-300 cursor-pointer'
             disabled={currentPage === 1}
             onClick={() => setCurrentPage(currentPage - 1)}
           >
             <FaChevronLeft />
           </button>
-          {[...Array(totalPages)].map((_, i) => (
-            <button key={i} onClick={() => setCurrentPage(i + 1)}>
-              {i + 1}
+          {renderPagination().map((page, index) => (
+            <button
+              className='px-2 py-1 rounded-md border border-secondary hover:bg-gray-300'
+              key={index}
+              onClick={() => typeof page === "number" && setCurrentPage(page)}
+            >
+              {page}
             </button>
           ))}
           <button
+            className='px-2 py-1 rounded-md border border-secondary hover:bg-gray-300 cursor-pointer'
             disabled={currentPage === totalPages}
             onClick={() => setCurrentPage(currentPage + 1)}
           >

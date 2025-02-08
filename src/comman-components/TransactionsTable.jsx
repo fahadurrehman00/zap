@@ -326,7 +326,6 @@ const TransactionsTable = () => {
     (currentPage - 1) * rowsPerPage,
     currentPage * rowsPerPage
   );
-  console.log(paginatedTransactions);
 
   const renderStatusBadge = (status) => {
     const statusColors = {
