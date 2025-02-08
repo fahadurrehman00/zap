@@ -3,6 +3,7 @@ import Logo from "../assets/images/logo.png";
 import HomeIcon from "../assets/images/home.svg";
 import CardIcon from "../assets/images/solar_card-transfer.svg";
 import AccountIcon from "../assets/images/solar_card.svg";
+import { Link } from "react-router";
 
 const Sidebar = () => {
   return (
@@ -26,7 +27,7 @@ const Sidebar = () => {
             </li>
             <li className='p-2 rounded flex gap-2 items-center cursor-pointer hover:bg-primary hover:text-secondary transition-all duration-300'>
               <img src={CardIcon} alt='Home' />
-              <a href='#'>Transactions</a>
+              <Link href='transaction'>Transactions</Link>
             </li>
             <li className='p-2 rounded flex gap-2 items-center cursor-pointer hover:bg-primary hover:text-secondary transition-all duration-300'>
               <img src={AccountIcon} alt='Home' />

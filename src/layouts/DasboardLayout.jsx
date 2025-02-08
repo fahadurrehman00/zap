@@ -2,6 +2,7 @@ import React from "react";
 import Sidebar from "../components/Sidebar";
 import Navbar from "../components/Navbar";
 import Dashboard from "../pages/Dashboard";
+import Transactions from "../pages/Transactions";
 
 const DashboardLayout = () => {
   return (
@@ -10,7 +11,8 @@ const DashboardLayout = () => {
       <div className='flex flex-col flex-grow'>
         <Navbar />
         <main className='flex-grow p-4'>
-          <Dashboard />
+          {/* <Dashboard /> */}
+          <Transactions />
         </main>
       </div>
     </div>
