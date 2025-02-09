@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { FiSearch, FiFilter, FiEye, FiPrinter, FiTrash2 } from "react-icons/fi";
-import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import {
+  MdOutlineKeyboardArrowLeft,
+  MdOutlineKeyboardArrowRight,
+} from "react-icons/md";
 import { BsEye } from "react-icons/bs";
 
 const TransactionTable2 = () => {
@@ -41,23 +44,115 @@ const TransactionTable2 = () => {
     );
   };
 
-  const renderPagination = () => {
-    const pageNumbers = [];
-    if (totalPages <= 5) {
+  const renderPaginationLinks = () => {
+    const paginationLinks = [];
+    if (totalPages <= 7) {
       for (let i = 1; i <= totalPages; i++) {
-        pageNumbers.push(i);
+        paginationLinks.push(
+          <button
+            key={i}
+            onClick={() => setCurrentPage(i)}
+            className={`px-3 py-1 rounded-lg border ${currentPage === i ? "bg-secondary text-white" : "border-secondary"}`}
+          >
+            {i}
+          </button>
+        );
       }
     } else {
-      pageNumbers.push(1, 2, 3, 4);
-      if (currentPage >= 3 && currentPage < totalPages - 2) {
-        pageNumbers.push("...");
-        pageNumbers.push(currentPage);
-      } else if (currentPage >= totalPages - 2) {
-        pageNumbers.push("...");
+      if (currentPage <= 4) {
+        for (let i = 1; i <= 4; i++) {
+          paginationLinks.push(
+            <button
+              key={i}
+              onClick={() => setCurrentPage(i)}
+              className={`px-3 py-1 rounded-lg border ${currentPage === i ? "bg-secondary text-white" : "border-secondary"}`}
+            >
+              {i}
+            </button>
+          );
+        }
+        paginationLinks.push(<span key="ellipsis" className="px-3">...</span>);
+        paginationLinks.push(
+          <button
+            key={totalPages}
+            onClick={() => setCurrentPage(totalPages)}
+            className={`px-3 py-1 rounded-lg border ${currentPage === totalPages ? "bg-secondary text-white" : "border-secondary"}`}
+          >
+            {totalPages}
+          </button>
+        );
+      } else if (currentPage > 4 && currentPage < totalPages - 3) {
+        paginationLinks.push(
+          <button
+            key={1}
+            onClick={() => setCurrentPage(1)}
+            className={`px-3 py-1 rounded-lg border ${currentPage === 1 ? "bg-secondary text-white" : "border-secondary"}`}
+          >
+            1
+          </button>
+        );
+        paginationLinks.push(<span key="ellipsis-start" className="px-3">...</span>);
+        paginationLinks.push(
+          <button
+            key={currentPage - 1}
+            onClick={() => setCurrentPage(currentPage - 1)}
+            className={`px-3 py-1 rounded-lg border ${currentPage === currentPage - 1 ? "bg-secondary text-white" : "border-secondary"}`}
+          >
+            {currentPage - 1}
+          </button>
+        );
+        paginationLinks.push(
+          <button
+            key={currentPage}
+            className="px-3 py-1 rounded-lg border bg-secondary text-white"
+          >
+            {currentPage}
+          </button>
+        );
+        paginationLinks.push(
+          <button
+            key={currentPage + 1}
+            onClick={() => setCurrentPage(currentPage + 1)}
+            className={`px-3 py-1 rounded-lg border ${currentPage === currentPage + 1 ? "bg-secondary text-white" : "border-secondary"}`}
+          >
+            {currentPage + 1}
+          </button>
+        );
+        paginationLinks.push(<span key="ellipsis-end" className="px-3">...</span>);
+        paginationLinks.push(
+          <button
+            key={totalPages}
+            onClick={() => setCurrentPage(totalPages)}
+            className={`px-3 py-1 rounded-lg border ${currentPage === totalPages ? "bg-secondary text-white" : "border-secondary"}`}
+          >
+            {totalPages}
+          </button>
+        );
+      } else {
+        paginationLinks.push(
+          <button
+            key={1}
+            onClick={() => setCurrentPage(1)}
+            className={`px-3 py-1 rounded-lg border ${currentPage === 1 ? "bg-secondary text-white" : "border-secondary"}`}
+          >
+            1
+          </button>
+        );
+        paginationLinks.push(<span key="ellipsis" className="px-3">...</span>);
+        for (let i = totalPages - 3; i <= totalPages; i++) {
+          paginationLinks.push(
+            <button
+              key={i}
+              onClick={() => setCurrentPage(i)}
+              className={`px-3 py-1 rounded-lg border ${currentPage === i ? "bg-secondary text-white" : "border-secondary"}`}
+            >
+              {i}
+            </button>
+          );
+        }
       }
-      pageNumbers.push(totalPages);
     }
-    return pageNumbers;
+    return paginationLinks;
   };
 
   return (
@@ -78,7 +173,7 @@ const TransactionTable2 = () => {
           </button>
         </div>
         <div className='flex space-x-2 items-center'>
-          <button className='bg-primary p-2 rounded-lg'>
+          <button className='bg-green-200 p-2 rounded-lg'>
             <BsEye />
           </button>
           <span>Show</span>
@@ -119,21 +214,15 @@ const TransactionTable2 = () => {
                 <span className='font-medium'>{transaction.name}</span>
               </td>
               <td
-                className={`font-medium ${
-                  transaction.amount > 0 ? "text-green-600" : "text-red-600"
-                }`}
+                className={`font-medium ${transaction.amount > 0 ? "text-green-600" : "text-red-600"}`}
               >
                 {transaction.amount.toLocaleString("en-US", {
                   style: "currency",
                   currency: "USD",
                 })}
               </td>
-              <td>
-                {transaction.method} <br /> {transaction.cardNumber}
-              </td>
-              <td>
-                {transaction.date} <br /> {transaction.time}
-              </td>
+              <td>{transaction.method} <br /> {transaction.cardNumber}</td>
+              <td>{transaction.date} <br /> {transaction.time}</td>
               <td>{renderStatusBadge(transaction.status)}</td>
               <td>
                 <div className='flex space-x-2'>
@@ -151,32 +240,23 @@ const TransactionTable2 = () => {
       <div className='flex justify-between items-center mt-4'>
         <span>
           Showing {(currentPage - 1) * recordsPerPage + 1}-
-          {Math.min(currentPage * recordsPerPage, transactions.length)} from{" "}
-          {transactions.length}
+          {Math.min(currentPage * recordsPerPage, transactions.length)} from {transactions.length}
         </span>
         <div className='flex space-x-2'>
           <button
-            className='px-2 py-1 rounded-md border border-secondary hover:bg-gray-300 cursor-pointer'
             disabled={currentPage === 1}
             onClick={() => setCurrentPage(currentPage - 1)}
+            className='p-2 rounded-md border border-secondary hover:bg-gray-300'
           >
-            <FaChevronLeft />
+            <MdOutlineKeyboardArrowLeft />
           </button>
-          {renderPagination().map((page, index) => (
-            <button
-              className='px-2 py-1 rounded-md border border-secondary hover:bg-gray-300'
-              key={index}
-              onClick={() => typeof page === "number" && setCurrentPage(page)}
-            >
-              {page}
-            </button>
-          ))}
+          {renderPaginationLinks()}
           <button
-            className='px-2 py-1 rounded-md border border-secondary hover:bg-gray-300 cursor-pointer'
             disabled={currentPage === totalPages}
             onClick={() => setCurrentPage(currentPage + 1)}
+            className='p-2 rounded-md border border-secondary hover:bg-gray-300'
           >
-            <FaChevronRight />
+            <MdOutlineKeyboardArrowRight />
           </button>
         </div>
       </div>
